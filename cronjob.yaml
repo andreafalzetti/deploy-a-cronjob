@@ -11,12 +11,12 @@ spec:
         spec:
           containers:
           - name: snapshots
-            image: okteto/okteto:2.24.1
+            image: okteto.dev/runner:0.0.1
             command: ["/bin/sh", "-c"]
             args:
               - kubectl get all;
                 echo waiting;
                 sleep 10;
                 echo after sleep;
-                kubectl get pods;
+                ls -al;
           restartPolicy: Never

@@ -1,2 +1,7 @@
+build:
+  runner:
+    image: okteto.dev/runner:0.0.1
+    context: .
+
 deploy:
   - kubectl apply -f cronjob.yaml

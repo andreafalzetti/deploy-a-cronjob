@@ -19,3 +19,23 @@ spec:
             args:
               - sleep 60;
           restartPolicy: Never
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ten-minute-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: ten-minute-job
+        image: busybox
+        command: ["/bin/sh", "-c", "
+          echo 'Job started';
+          sleep 600;
+          echo 'Job completed';
+        "]
+      restartPolicy: Never
+  backoffLimit: 4

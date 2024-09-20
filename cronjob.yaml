@@ -14,12 +14,8 @@ spec:
         spec:
           containers:
           - name: snapshots
-            image: okteto.dev/runner:0.0.1
+            image: busybox
             command: ["/bin/sh", "-c"]
             args:
-              - kubectl get all;
-                echo waiting;
-                sleep 10;
-                echo after sleep;
-                ls -al;
+              - sleep 60;
           restartPolicy: Never

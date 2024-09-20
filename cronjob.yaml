@@ -39,3 +39,26 @@ spec:
         "]
       restartPolicy: Never
   backoffLimit: 4
+
+---
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: busybox-replicaset
+  labels:
+    app: busybox
+spec:
+  replicas: 3 # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: busybox
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:latest
+        command: ['sh', '-c', 'while true; do echo "Sleeping..."; sleep 3600; done']

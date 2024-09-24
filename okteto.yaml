@@ -4,4 +4,5 @@ build:
     context: .
 
 deploy:
+  - kubectl apply -f job.yaml
   - kubectl apply -f cronjob.yaml

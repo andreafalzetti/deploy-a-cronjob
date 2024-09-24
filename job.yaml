@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: long-startup-job
+spec:
+  activeDeadlineSeconds: 7200  # Job will be active for up to 2 hours
+  backoffLimit: 6  # Number of retries before considering the job as failed
+  template:
+    metadata:
+      name: long-startup-pod
+    spec:
+      containers:
+      - name: job-container
+        image: ubuntu:latest  # Using a public Ubuntu image
+        command: ["bash", "-c", "sleep 120 && touch /tmp/ready && echo 'Job started' && sleep 600"]  # Simulate long startup
+        startupProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/ready  # Checks if /tmp/ready file exists
+          failureThreshold: 30  # Number of failures before marking as unhealthy
+          periodSeconds: 10  # Probe every 10 seconds
+          timeoutSeconds: 5   # Timeout for each probe
+          successThreshold: 1
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never  # Do not restart containers by default
+
+
